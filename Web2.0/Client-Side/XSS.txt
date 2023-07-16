@@ -3,11 +3,10 @@ XSS
 
 To prevent XSS in HTTP responses that aren't intended to contain any HTML or JavaScript, you can use 
 the Content-Type and X-Content-Type-Options headers to ensure that browsers interpret the responses in the way you intend.
-As a last line of defense, you can use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities 
-that still occur. 
+Use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities that still can occur. 
 
 Content-Type explaination: 
-the content type makes a difference. XSS only applies to documents that are capable of running active (script) content in the first place.
+ XSS only applies to documents that are capable of running active script content in the first place.
 
 A page with the MIME type application/json can't contain active content. To the browser it's just data. The situation would be similar with text/plain, 
 text/javascript, image/jpeg, etc.
@@ -23,13 +22,11 @@ of one or more directives, separated by semicolons.
 
 script-src 'self'
 
-
 The CSP directive can specify a nonce (a random value) and the same value must be used in the tag that loads a script. If the values do not match, then the script 
-will not execute. To be effective as a control, the nonce must be securely generated on each page load and not be guessable by an attacker.
+will not execute. To be effective as a control, the nonce must be securely generated on each page load and not be guessable.
 
 The CSP directive can specify a hash of the contents of the trusted script. If the hash of the actual script does not match the value specified in the directive, 
 then the script will not execute. If the content of the script ever changes, then you will of course need to update the hash value that is specified in the directive.
--------
 
 -------HttpOnly
 Set-Cookie: sessionid=QmFieWxvbiA1; HttpOnly
@@ -38,16 +35,14 @@ Many applications hide their cookies from JavaScript using the HttpOnly flag.
 HttpOnly is an additional flag included in a Set-Cookie HTTP response header. Using the HttpOnly flag when generating a cookie helps mitigate 
 the risk of client side script accessing the protected cookie (if the browser supports it).
 If the HttpOnly flag (optional) is included in the HTTP response header, the cookie cannot be accessed through client side script 
-(again if the browser supports this flag)
---------
-
+(if the browser supports this flag)
 
 -----Dangling markup injection
 
 Dangling markup injection is a technique for capturing data cross-domain in situations where a full cross-site scripting attack isn't possible.
 
 Suppose an application embeds attacker-controllable data into its responses in an unsafe way:
-<input type="text" name="input" value="CONTROLLABLE DATA HERE"
+<input type="text" name="input" value="CONTROLLABLE DATA HERE">
 
 In this situation, an attacker would naturally attempt to perform XSS. But suppose that a regular XSS attack is not possible, due to input filters, 
 content security policy, or other obstacles. Here, it might still be possible to deliver a dangling markup injection attack using a payload like the following:
@@ -63,8 +58,9 @@ Depending on the application's functionality, this might include CSRF tokens, em
 
 Any attribute that makes an external request can be used for dangling markup. 
 It is also useful if some secret is saved in clear text in the HTML and you want to exfiltrate it from the client, or if you want to mislead some script execution.
------------------------------------
 
+
+-----------------------------------XSS Payload
 
 Remember that you can execute JS in Href att. with: javascript:alert(1) (jQuery)
 
