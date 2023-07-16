@@ -1,2 +1,3 @@
 # fuzzy-ctf
-A repo git for ctf
+
+You will find writeup and some tricks.
