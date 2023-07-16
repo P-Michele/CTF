@@ -46,10 +46,13 @@ On Unix-based systems, you can also use backticks or the dollar character to per
     $(
     injected command )
 
-Note that the different shell metacharacters have subtly different behaviors that might affect whether they work in certain situations, and whether they allow in-band retrieval of command output or are useful only for blind exploitation.
 
-Sometimes, the input that you control appears within quotation marks in the original command. In this situation, you need to terminate the quoted context (using " or ') before using suitable shell metacharacters to inject a new command. 
 
+Sometimes, the input that you control appears within quotation marks in the original command. In this situation, you need to terminate the quoted context 
+(using " or ') before using suitable shell metacharacters to inject a new command. 
+
+{IFS} is the decode for space in linux console. You can try to search for all .txt file with:
+cat{IFS}*.txt if the space is not allowed.
 
 
 
