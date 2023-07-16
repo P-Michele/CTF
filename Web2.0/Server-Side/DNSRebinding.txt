@@ -1,9 +1,19 @@
-Nell'attacco DNS rebinding, un attaccante crea un sito web malevolo e lo pubblica su Internet. Questo sito web contiene codice che sfrutta una vulnerabilità del browser, che consente di rilegare (rebind) un nome di dominio a un indirizzo IP diverso. Inizialmente, il sito web malevolo fornisce una risposta DNS con un breve tempo di vita (TTL) che punta a un indirizzo IP controllato dall'attaccante stesso.
+In DNS rebinding attack, an attacker creates a malicious website and publishes it on the Internet. 
+This website contains code that exploits a browser vulnerability,
+which allows a domain name to be bound (rebind) to a different IP address. 
+Initially, the malicious website provides a short-lived DNS response (TTL) that points to an IP address
+controlled by the attacker himself.
 
-Il browser carica quindi il contenuto del sito web malevolo, che include del codice JavaScript che viene eseguito sul computer dell'utente. Il codice JavaScript fa un secondo tentativo di risoluzione DNS verso lo stesso nome di dominio, ma questa volta l'attaccante cambia l'indirizzo IP associato con un indirizzo IP locale della rete dell'utente.
+The browser then loads the content of the malicious website, which includes JavaScript code that is executed on the user's computer.
+The JavaScript code makes a second attempt at DNS resolution to the same domain name, but this time the attacker changes the address
+IP associated with it to a local IP address on the user's network.
 
-Poiché il browser ha ancora in cache la risposta DNS originale con un TTL breve, il secondo tentativo di risoluzione DNS viene risolto immediatamente utilizzando la risposta in cache, puntando all'indirizzo IP locale. Ciò consente all'attaccante di comunicare con il dispositivo dell'utente sulla rete locale, bypassando le restrizioni di sicurezza del browser che normalmente impediscono l'accesso diretto alle risorse di rete.
+Since the browser still has the original DNS response cached with a short TTL,
+the second DNS resolution attempt is resolved immediately using the cached response, 
+pointing to the local IP address. This allows the attacker to communicate with the user's device on the local network,
+bypassing browser security restrictions that normally prevent direct access to network resources.
 
-Una volta stabilita la connessione con il dispositivo dell'utente sulla rete locale, l'attaccante può eseguire una serie di azioni dannose, ad esempio accedere ai file locali, controllare i dispositivi connessi alla rete (come router o telecamere di sorveglianza), eseguire attacchi di phishing o distribuire malware.
+DNS Rebinding allows SOP and CORS(cross-origin resource sahring) to be bypassed.
 
-Per proteggersi da attacchi DNS rebinding, è consigliabile mantenere il proprio software, inclusi il browser e il sistema operativo, sempre aggiornato con le ultime patch di sicurezza. Inoltre, è possibile configurare il proprio firewall o router per bloccare le connessioni da parte di domini non attendibili o impostare restrizioni di accesso per le risorse di rete locali.
+Translated with www.DeepL.com/Translator (free version)
+
