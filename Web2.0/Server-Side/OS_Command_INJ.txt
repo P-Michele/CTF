@@ -1,0 +1,55 @@
+OS Command INJ
+
+
+Some commands:
+---------------------------------------------------
+Purpose of command 	Linux 	Windows
+Name of current user 	whoami 	whoami
+Operating system 	uname -a 	ver
+Network configuration 	ifconfig 	ipconfig /all
+Network connections 	netstat -an 	netstat -an
+Running processes 	ps -ef 	tasklist 
+....................................................
+
+
+Try to change some params and get some errors. Maybe a os command is running backend. Try | to append new command or & to put concatenated command.
+
+Blind OS:
+
+Most of command inj are blind, you can try :
+
+-Time delay on response with     & ping -c 10 127.0.0.1 &   (10 sec delay)  or input=x||ping+-c+10+127.0.0.1||
+
+-Redirecting output to a dir that you can access, like : & whoami > /var/www/static/whoami.txt &  or /var/www/images/
+and then see the output going to that file.
+You can try to access directly, or save the file in the images and change a image request and find your file.
+
+-Try nslookup to do a whoami to your host
+
+
+The following command separators work on both Windows and Unix-based systems:
+
+    &
+    &&
+    |
+    ||
+
+The following command separators work only on Unix-based systems:
+
+    ;
+    Newline (0x0a or \n)
+
+On Unix-based systems, you can also use backticks or the dollar character to perform inline execution of an injected command within the original command:
+
+    `
+    injected command `
+    $(
+    injected command )
+
+Note that the different shell metacharacters have subtly different behaviors that might affect whether they work in certain situations, and whether they allow in-band retrieval of command output or are useful only for blind exploitation.
+
+Sometimes, the input that you control appears within quotation marks in the original command. In this situation, you need to terminate the quoted context (using " or ') before using suitable shell metacharacters to inject a new command. 
+
+
+
+

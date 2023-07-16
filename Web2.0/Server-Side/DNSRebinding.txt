@@ -1,0 +1,9 @@
+Nell'attacco DNS rebinding, un attaccante crea un sito web malevolo e lo pubblica su Internet. Questo sito web contiene codice che sfrutta una vulnerabilità del browser, che consente di rilegare (rebind) un nome di dominio a un indirizzo IP diverso. Inizialmente, il sito web malevolo fornisce una risposta DNS con un breve tempo di vita (TTL) che punta a un indirizzo IP controllato dall'attaccante stesso.
+
+Il browser carica quindi il contenuto del sito web malevolo, che include del codice JavaScript che viene eseguito sul computer dell'utente. Il codice JavaScript fa un secondo tentativo di risoluzione DNS verso lo stesso nome di dominio, ma questa volta l'attaccante cambia l'indirizzo IP associato con un indirizzo IP locale della rete dell'utente.
+
+Poiché il browser ha ancora in cache la risposta DNS originale con un TTL breve, il secondo tentativo di risoluzione DNS viene risolto immediatamente utilizzando la risposta in cache, puntando all'indirizzo IP locale. Ciò consente all'attaccante di comunicare con il dispositivo dell'utente sulla rete locale, bypassando le restrizioni di sicurezza del browser che normalmente impediscono l'accesso diretto alle risorse di rete.
+
+Una volta stabilita la connessione con il dispositivo dell'utente sulla rete locale, l'attaccante può eseguire una serie di azioni dannose, ad esempio accedere ai file locali, controllare i dispositivi connessi alla rete (come router o telecamere di sorveglianza), eseguire attacchi di phishing o distribuire malware.
+
+Per proteggersi da attacchi DNS rebinding, è consigliabile mantenere il proprio software, inclusi il browser e il sistema operativo, sempre aggiornato con le ultime patch di sicurezza. Inoltre, è possibile configurare il proprio firewall o router per bloccare le connessioni da parte di domini non attendibili o impostare restrizioni di accesso per le risorse di rete locali.

