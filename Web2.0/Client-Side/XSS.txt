@@ -59,6 +59,16 @@ Depending on the application's functionality, this might include CSRF tokens, em
 Any attribute that makes an external request can be used for dangling markup. 
 It is also useful if some secret is saved in clear text in the HTML and you want to exfiltrate it from the client, or if you want to mislead some script execution.
 
+------------------------------------DOM XSS, what is the DOM?
+
+DOM is a programming interface for web documents. It represent the page as nodes and objects.
+DOM can be manipulated with javascript, for example document.querySelectorAll('p') select all <p> att
+in the document. The document object represent the document itself.
+The DOM is built using multiple APIs that work together. The core DOM defines the entities describing any document and the objects within it.
+For example, the HTML DOM API adds support for representing HTML documents to the core DOM, and the SVG API adds support for representing SVG documents. 
+Implementations of the DOM can be built for any language.
+When you create a script, whether inline in a <script> element or included in the web page, you can immediately begin using the API for the document or window
+objects to manipulate the document itself
 
 -----------------------------------XSS Payload
 
@@ -84,10 +94,9 @@ For brek out from JS string / JSON try  \'-alert(1)// (when < and " are blacklis
 you can also try \';alert(1)//   the \ is for the escape of ' . Because sometimes ' = '\' so with \'  you got =  '\\';yourcode//'
 
 
-How to use XSS to performs CSRF : (ex)
-
+--------------CSRF using XSS: 
 <script>
-var req = new XMLHttpRequest();
+var req = new XMLHttpRequest();//It depends on the api, you can try with fetch()
 req.onload = handleResponse;
 req.open('get','/my-account',true);
 req.send();
