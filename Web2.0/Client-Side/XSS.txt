@@ -156,3 +156,40 @@ onerror=alert;throw 1
 You can try to bypass input validation HTML encoding the special carachters. &apos; will be converted to " and you will bypass the validation. 
 
 -Sometimes you can find the report-uri header, that reflect the actual policy of CSP. Inject a valid script-src-elem can bypass the CSP overwriting existing script-src directives.
+
+--------------------------------------DOM XSS
+
+DOM XSS arise when javascript take data from an input source, like the URL, and pass it to a sink that can dinamically execute a code, like eval or innerHTML.
+Usually, to take an input from the URL, you will see window.location.
+document.body.innerHTML is a sinks beacuse it potentially allow to inject HTML code and execute arbitrary javascript.
+Chrome, Firefox, and Safari will URL-encode location.search and location.hash(#), while IE11 and Microsoft Edge (pre-Chromium) will not URL-encode these sources.
+With an url-Encode the XSS is more unlikely to work.
+
+Common sources(where the code take your's input):
+document.URL
+document.documentURI
+document.URLUnencoded
+document.baseURI
+location
+document.cookie
+document.referrer
+window.name
+history.pushState
+history.replaceState
+localStorage
+sessionStorage
+IndexedDB (mozIndexedDB, webkitIndexedDB, msIndexedDB)
+Database
+
+Sink example:
+document.write()
+window.location
+document.cookie
+eval()
+document.domain
+WebSocket()
+element.src
+postMessage()
+setRequestHeader()  (for Ajax request-header manipulation)
+JSON.parse()
+ecc....
