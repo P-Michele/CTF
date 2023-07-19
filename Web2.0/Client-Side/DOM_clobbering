@@ -22,3 +22,4 @@ DOM-Purify:
 DOMPurify is filter you can use in an attempt to reduce DOM-based vulnerabilities. However, DOMPurify allows you to use the cid: protocol, which does not URL-encode double-quotes. 
 This means you can inject an encoded double-quote that will be decoded at runtime:(you can use cid: in DOMPurify to encode " in href or otherb html elements)
 <a id=yourID><a id=yourID name=yourName href="cid:&quot;onerror=alert(1)//">
+
