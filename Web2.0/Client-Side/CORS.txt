@@ -128,7 +128,8 @@ And see if is reflected in the ACAO. In this case, CORS is misconfigurated and a
 Some implementation of CORS are based on a whitelist of domain that can be accessed.
 If the origin appears on the whitelist then it is reflected in the Access-Control-Allow-Origin header so that access is granted.
 There can be bad implementation that allow all subdomain of a domain(including future subdomains not yet in existence).
-These rules are often implemented by matching URL prefixes or suffixes, or using regular expressions. Any mistakes in the implementation can lead to access being granted to unintended external domains.
+These rules are often implemented by matching URL prefixes or suffixes, or using regular expressions. 
+Any mistakes in the implementation can lead to access being granted to unintended external domains.
 
 For example, suppose an application grants access to all domains ending in:
 normal-website.com
