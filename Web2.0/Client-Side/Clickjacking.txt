@@ -3,6 +3,15 @@ Clickjacking (UI redressing)
 
 The attacker will create a decoy website with an invisible button(iframe).
 
+--------------------------------CSP and X-Frame-Options to avoid clickjacking
+
+-X-Frame-Option is a header that you can specify to allow some website to be rendered in iframes.
+
+-Using CSP prevent clickjacking is more flexible than using the X-Frame-Options.
+For example:
+frame-ancestors 'self' https://normal-website.com https://*.robust-website.com
+
+CSP also validates each frame in the parent frame hierarchy, whereas X-Frame-Options only validates the top-level frame.
 
 --------------------------------Basic Clickjacking
 
@@ -59,15 +68,16 @@ AND (Prefilled Input)
 
 There are some techniques to avoid clickjacking:
 
-check and enforce that the current application window is the main or top window,
+Check and enforce that the current application window is the main or top window,
 make all frames visible,
 prevent clicking on invisible frames,
 intercept and flag potential clickjacking attacks to the user.
 
-An effective attacker workaround against frame busters is to use the HTML5 iframe sandbox attribute. When this is set with the allow-forms or allow-scripts 
+An effective attacker workaround against iframe is to use the HTML5 iframe sandbox attribute. When this is set with the allow-forms or allow-scripts 
 values and the allow-top-navigation value is omitted then the frame buster script can be neutralized as the iframe cannot check whether or not it is the top window:
 
 <iframe id="victim_website" src="https://victim-website.com" sandbox="allow-forms"></iframe>
+
 ----------------------------------------XSS with clickjacking
 
-If a website is vulnerable to xss you can use XSS to inject an XSS with the submit of the user
+If a website is vulnerable to clickjacking you can use XSS to inject an XSS with the submit of the user
