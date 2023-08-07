@@ -1,9 +1,0 @@
-Insecure-Deseralization:
-
-------------------Recon
--Serialized Java objects always begin with the same bytes, which are encoded as -ac ed- in hexadecimal and rO0 in Base64
-
--PHP example with native method serialize():
-O:4:"User":2:{s:4:"name":s:6:"carlos"; s:10:"isLoggedIn":b:1;}
-------------------Payload
-If data in serialized object are not filtered you can try to achieve RCE, Path traversal ecc......
