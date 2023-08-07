@@ -1,0 +1,61 @@
+Access Control:
+
+
+
+Authentication identifies the user and confirms that they are who they say they are.
+Session management identifies which subsequent HTTP requests are being made by that same user.
+Access control determines whether the user is allowed to carry out the action that they are attempting to perform.
+
+
+Try robots.txt or watch source code for some leak
+
+
+The application makes subsequent access control decisions based on the submitted value. For example:
+insecure-website.com/login/home.jsp?admin=true
+insecure-website.com/login/home.jsp?role=1
+
+Try to search for role/roleid params. Or try to update your account (Try to do a POST request) with roleid params and see if is accepted
+
+
+Some applications enforce access controls at the platform layer by restricting access to specific URLs and HTTP methods based on the user's role. For example an application might 
+configure rules like the following:
+DENY: POST, /admin/deleteUser, managers
+Some application frameworks support various non-standard HTTP headers that can be used to override the URL in the original request, such as X-Original-URL and X-Rewrite-URL.
+Or maybe the rules only block POST request, not GET ,HEAD and others. Try to change POST to POSTX.
+
+---FOR SPRING 5.3 and similars:
+
+Similar discrepancies can arise if developers using the Spring framework have enabled the useSuffixPatternMatch option. This allows paths with an arbitrary file extension to be 
+mapped to an equivalent endpoint with no file extension. In other words, a request to /admin/deleteUser.anything would still match the /admin/deleteUser pattern. 
+Prior to Spring 5.3, this option is enabled by default.
+
+Maybe u can't see other user params value because there is a GUIDs(globally unique identifiers). Search for leak in the source code or try to understand how user's URLs are created.
+GUIDs belonging to other users might be disclosed elsewhere in the application where users are referenced, such as user messages or reviews. 
+
+Sometimes redirections can contains some useful data. Maybe you will be redirect to login page but the request is succesful
+
+Some websites base access controls on the REFER header submitted in the HTTP request.
+The Referer header is generally added to requests by browsers to indicate the page from which a request was initiated. 
+example: If the Referer header contains the main /admin URL, then the request is allowed.
+
+---Insecure direct object references (IDOR):
+
+IDOR vulnerabilities often arise when sensitive resources are located in static files on the server-side filesystem. For example, a website might save chat message 
+transcripts to disk using an incrementing filename, and allow users to retrieve these by visiting a URL like the following:
+insecure-website.com/static/12144.txt
+
+You can change file name to obtain access to other .txt
+
+------------------------------------------
+
+Sometimes user have roles based on email, or similar. You can try to register, or use in general, subdomain like:
+
+very-long-string@dontwannacry.com.YOUR-EMAIL-ID.web-security-academy.net
+
+The server is gonna send the request to your email, but the email will ben dontwannacry.com
+
+
+
+
+
+

