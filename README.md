@@ -1,6 +1,6 @@
 # fuzzy-ctf
 
-You will find writeup and some tricks.
+You will find some tricks from portswigger and ctf.
 
 Email: perinimichele@protonmail.com
 
