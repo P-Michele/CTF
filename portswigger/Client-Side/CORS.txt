@@ -8,7 +8,7 @@ The cross-origin resource sharing protocol uses a suite of HTTP headers that def
  is permitted. These are combined in a header exchange between a browser and the cross-origin web site that it is trying to access. 
 
 ----SOP
-(SOP)The same-origin policy is a web browser security mechanism that aims to prevent websites from attacking each other.
+Is a web browser security mechanism that aims to prevent websites from attacking each other.
 
 The same-origin policy restricts scripts on one origin from accessing data from another origin. An origin consists of a URI scheme, domain and port number. 
 For example, consider the following URL:
