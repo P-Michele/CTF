@@ -1,4 +1,4 @@
-g CORS
+CORS
 
 Cross-origin resource sharing is a browser mechanism which enables controlled access to resources located outside of a given domain. 
 It extends and adds flexibility to the same-origin policy (SOP). However, it also provides potential for cross-domain attacks, if a website's CORS policy is 
@@ -6,6 +6,10 @@ poorly configured and implemented. CORS is not a protection against cross-origin
 
 The cross-origin resource sharing protocol uses a suite of HTTP headers that define trusted web origins and associated properties such as whether authenticated access
  is permitted. These are combined in a header exchange between a browser and the cross-origin web site that it is trying to access. 
+
+---Origin
+
+Same scheme, domain, port number
 
 ----SOP
 Is a web browser security mechanism that aims to prevent websites from attacking each other.
