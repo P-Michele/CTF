@@ -2,4 +2,24 @@ Web hacking Reconnaissance:
 
 1: Manually Walking Through the Target
 
-2:Google Dorking
+2: Google Dorking
+
+3: Scope Discovery:
+  -use WHOIS and Reverse WHOIS(ViewDNS.info), to find person information of the owner of the website
+  -nslookup facebook.com  to find the IP
+  -Autonomous system numbers identify the owner of an AS. To figure out if a company owns a dedicated IP range, run several IP-to-ASN translations to see if the IP addresses map to a single ASN. command: whois -h whois.cymru.com 157.240.2.20
+  -Certificate Parsing, use online databases like crt.sh, Censys, and Cert Spotter to find certifi- cates for a domain
+  Subdomain Enumeratio, after the domain enumeration, try to find much sufrace attack as possible with tools like Sublist3r, SubBrute, Amass, and Gobuster can enumerate subdomains automatically with a variety of wordlists and strategies.
+  You can use Commonspeak2 or https://github.com/danielmiessler/SecLists/ to gen a wordList. Use sort -u wordlist1.txt wordlist2.txt to delete duplicate items from 2+ wordlists. Altdns is a tool to use for autonomation of subdomain enumeartion when
+  you already know some somedomains.
+  -Service Enumeration, you can do it by scanning the ports(nmap), Shodan is a tool that you can use for passive scanning. The alternative to Shodan are Censys and Project Sonar.
+  -Directory Brute-Forcing, use Dirsearch or Gobuste. Then use a screenshot tool like EyeWitness or Snapperto automatically verify that a page is hosted on each location.
+  -Spidering the Site, another way to find directories is using web-crawlers. ZAP/Burp have a built-inweb spider you can us 
+  -Third-Party Hosting, If an organization uses Amazon S3, its S3 buckets can contain hidden endpoints, logs, credentials ecc...   You can do it by google dorking: BUCKET.s3.amazonaws.com or s3.amazonaws.com/BUCKET. Otherwise try 
+  GrayhatWarfare to do a key-word search of the buckets and Lazys3/Bucket Stream for bruteforce buckets.
+  -If you find some bucket, install awscli and try to access the buckets,(aws s3 ls s3://BUCKET_NAME). If this works see if you can read the contents of any interesting files bycopying files to your local machine
+  -GitHub Recon: if you can find some KEY, secret, password... paste it into KeyHacks to check that the credentials are valid. You can use Gitrob and TruffleHog to autonomate the Github Recon
+  -Others: search for employees on Linkedin, ads for finding new software personnel(required skills are used to structure the site). 
+  Search for the company on Pastebin and use PasteHunter to see if there are any leaks, otherwise try WayBackMachine and use the tool: https://github.com/tomnomnom/waybackurls/ to automate the extraction of endpointsSearch the 
+
+  -Write your own script and libraries
