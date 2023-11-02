@@ -21,7 +21,7 @@ to see the result
 
 -Dirsearch
 
--eyewotness
+-eyewitness
 For take multiple info of a website
 
 -WhatWeb
