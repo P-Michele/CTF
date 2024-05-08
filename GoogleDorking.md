@@ -53,5 +53,3 @@ This guide provides an overview of several advanced Google search operators that
 
 - **Google Hacking Database:**  
   Visit the [Google Hacking Database](https://www.exploit-db.com/google-hacking-database/) for a comprehensive set of search queries used for finding security-related information.
-
-This guide serves as an introduction to using advanced Google search operators to improve search effectiveness and locate specific types of content more efficiently.
