@@ -106,11 +106,20 @@ function handleResponse() {
 
 -You can try to bypass html escape with the svg element.(That defines vector-based graphics)
 
--If the web application firewall prevents your requests from ever reaching the website, you can try to throw an exception:
+-If the WAF prevents your requests from reaching the website, you can try to throw an exception:
+```
 onerror=alert;throw 1
-
+```
 -When the browser has parsed out the HTML tags and attributes within a response, it will perform HTML-decoding of tag attribute values before they are processed any further.
-You can try to bypass input validation HTML encoding the special carachters. &apos; will be converted to " and you will bypass the validation. 
+You can try to bypass input validation HTML encoding the special carachters. 
+```
+&apos;
+```
+will be converted to
+```
+"
+```
+ and you will bypass the validation. 
 
 -Sometimes you can find the report-uri header, that reflect the actual policy of CSP.
 Inject a valid script-src-elem can bypass the CSP overwriting existing script-src directives.
