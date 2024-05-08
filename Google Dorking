@@ -1,53 +1,57 @@
--site
-Tells Google to show you results from a certain site only, ex. search: print site:python.org.
+# Advanced Google Search Operators Guide
 
--inurl
-Searches for pages with a URL that match the search string, ex. inurl:"/course/jumpto.php" site:example.com.
+This guide provides an overview of several advanced Google search operators that can enhance your search capabilities and refine your results.
 
--intitle
-Finds specific strings in a page’s title. This is useful because it allows you
-to find pages that contain a particular type of content. For example,
-file-listing pages on web servers often have index of in their titles, ex. intitle:"index of" site:example.com.
+## Specific Search Operators
 
--link
-Searches for web pages that contain links to a specified URL. ex. link:"https://en.wikipedia.org/wiki/DoS".
+- **site:**  
+  Restricts results to those from a specified site.  
+  Example: `site:python.org print`
 
--filetype
-Searches for pages with a specific file extension. ex. filetype:log site:example.com.
+- **inurl:**  
+  Targets pages with URLs containing the specified string.  
+  Example: `inurl:"/course/jumpto.php" site:example.com`
 
--Wildcard (*)
-You can use the wildcard operator (*) within searches to mean any char-
-acter or series of characters. 
+- **intitle:**  
+  Searches for pages with specific strings in the title, useful for locating specific types of content.  
+  Example: `intitle:"index of" site:example.com`
 
--Quotes (" ")
-Adding quotation marks around your search terms forces an exact match.
+- **link:**  
+  Finds pages that link to a specific URL.  
+  Example: `link:"https://en.wikipedia.org/wiki/DoS"`
 
--Or (|)
-The or operator is denoted with the pipe character (|) and can be used
-to search for one search term or the other, or both at the same time.
-The pipe character must be surrounded by spaces. ex. "how to hack" site:(reddit.com | stackoverflow.com). 
+- **filetype:**  
+  Searches for pages with a particular file extension.  
+  Example: `filetype:log site:example.com`
 
--Minus (-)
-The minus operator (-) excludes certain search results. For example,
-let’s say you’re interested in learning about websites that discuss hacking,
-but not those that discuss hacking PHP, ex. "how to hack websites" -php.
+- **Wildcard (\*):**  
+  The wildcard operator can represent any character or series of characters in a search.
 
--Kibana 
-Is a data visualization tool that displays server operation data such
-as server logs, debug messages, and server status. A compromised Kibana
-instance can allow attackers to collect extensive information about a site’s
-operation. Many Kibana dashboards run under the path app/kibana, so this
-query will reveal whether the target has a Kibana dashboard. You can then
-try to access the dashboard to see if it’s unprotected:
-site:example.com inurl:app/kibana
+- **Quotes (" "):**  
+  Enclosing terms in quotes requires an exact match in the search results.
 
--Google can find company resources hosted by a third party online,
-such as Amazon S3 buckets, ex. site:s3.amazonaws.com COMPANY_NAME
+- **Or (|):**  
+  The 'Or' operator allows for the inclusion of either term, or both, in the search results.  
+  Example: `"how to hack" site:(reddit.com | stackoverflow.com)`
 
--Look for special extensions that could indicate a sensitive file. In addi-
-tion to .log, which often indicates log files, search for .php, cfm, asp, .jsp, and
-.pl, the extensions often used for script files:
+- **Minus (-):**  
+  Excludes terms from the search results.  
+  Example: `"how to hack websites" -php`
 
--Check out the Google Hacking Database (https://www.exploit-db.com/google-hacking-database/), a
-website that hackers and security practitioners use to share Google search
-queries for finding security-related information.
+## Specialized Usage
+
+- **Kibana:**  
+  A tool for data visualization which can be compromised to reveal extensive site operational data. Often located under `app/kibana`.  
+  Example: `site:example.com inurl:app/kibana`
+
+- **Third-party hosted company resources:**  
+  Useful for locating company resources hosted externally, such as on Amazon S3 buckets.  
+  Example: `site:s3.amazonaws.com COMPANY_NAME`
+
+- **Sensitive file extensions:**  
+  Searches for potentially sensitive files with extensions like .log, .php, .cfm, .asp, .jsp, and .pl.
+
+- **Google Hacking Database:**  
+  Visit the [Google Hacking Database](https://www.exploit-db.com/google-hacking-database/) for a comprehensive set of search queries used for finding security-related information.
+
+This guide serves as an introduction to using advanced Google search operators to improve search effectiveness and locate specific types of content more efficiently.
