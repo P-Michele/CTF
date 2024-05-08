@@ -15,7 +15,7 @@ Utilize advanced Google search techniques to uncover hidden information about th
 ### nslookup
 - Find the IP address of a domain.
 - nslookup example.com
-- 
+  
 ### IP-to-ASN
 - Identify if a company owns a dedicated IP range.
 whois -h whois.cymru.com IP_ADDRESS
