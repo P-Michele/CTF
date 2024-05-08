@@ -69,7 +69,3 @@ Correct CORS configuration does not guard against XSS, where a trusted but vulne
 
 - **Breaking TLS through CORS**: Allowing CORS requests to a domain over HTTP can lead to man-in-the-middle attacks.
   - Attack involves redirecting to an HTTP page which then makes a CORS request to the secure site, tricking it into revealing sensitive information.
-
-## Conclusion
-
-CORS is a powerful mechanism for modern web applications, but requires careful configuration to avoid introducing web security risks. Understanding both the capabilities and vulnerabilities of CORS is crucial for secure application development.
