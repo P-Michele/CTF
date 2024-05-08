@@ -43,4 +43,4 @@ When input appears within quotation marks in the original command, you must firs
 ## Special Characters and Encodings
 
 - **Internal Field Separator (IFS)**: In scenarios where spaces are filtered, the IFS variable can be used as a substitute for spaces.
-  - Example: Use `cat{IFS}*.txt` to concatenate and display `.txt` files when spaces are blocked.
+  - Example: Use `cat${IFS}*.txt` to concatenate and display `.txt` files when spaces are blocked.
