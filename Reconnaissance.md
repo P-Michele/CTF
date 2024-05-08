@@ -14,9 +14,11 @@ Utilize advanced Google search techniques to uncover hidden information about th
 
 ### nslookup
 - Find the IP address of a domain.
+- nslookup example.com
 - 
 ### IP-to-ASN
 - Identify if a company owns a dedicated IP range.
+whois -h whois.cymru.com IP_ADDRESS
 
 ### Certificate Parsing
 - Use online databases like crt.sh, Censys, and Cert Spotter to find certificates for a domain.
@@ -25,6 +27,7 @@ Utilize advanced Google search techniques to uncover hidden information about th
 - After domain enumeration, use tools like Sublist3r, SubBrute, Amass, and Gobuster to find as many subdomains as possible.
 - Use Commonspeak2 or resources like [SecLists](https://github.com/danielmiessler/SecLists/) to generate a wordlist.
 - Combine and deduplicate wordlists:
+sort -u wordlist1.txt wordlist2.txt
 
 - Use Altdns for automated subdomain enumeration when some subdomains are already known.
 
@@ -46,6 +49,8 @@ Utilize advanced Google search techniques to uncover hidden information about th
 ### Accessing S3 Buckets
 - Install awscli and access buckets:
 - If access is granted, check for interesting files:
+BUCKET.s3.amazonaws.com
+aws s3 ls s3://BUCKET_NAME
 
 ### GitHub Recon
 - Use tools like Gitrob and TruffleHog to automate the search for keys, secrets, or passwords on GitHub.
