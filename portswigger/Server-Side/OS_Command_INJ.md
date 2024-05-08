@@ -34,7 +34,7 @@ Command separators can vary based on the operating system and can be used to cha
   - `&`, `&&`, `|`, `||`
 - **Unix-specific**:
   - `;`, `\n` (newline)
-  - Inline execution: `` `command` ``, `$ (command)`
+  - Inline execution: `` `command` ``, `$(command)`
 
 ## Escaping Command Contexts
 
