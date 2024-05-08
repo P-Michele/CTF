@@ -11,6 +11,7 @@ Utilize advanced Google search techniques to uncover hidden information about th
 ## 3. Scope Discovery
 ### WHOIS and Reverse WHOIS
 - Use tools like ViewDNS.info to find personal information of the website owner.
+- whois -h whois.cymru.com IP_ADDRESS
 
 ### nslookup
 - Find the IP address of a domain.
