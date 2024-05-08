@@ -23,7 +23,7 @@ These headers can be easily spoofed, leading to inaccurate security validations.
 
 ### CSRF in WebSockets
 
-Cross-Site Request Forgery (CSRF) can be exploited in WebSocket connections if they rely solely on session cookies without additional verification. Below is an example of how a CSRF attack could be mounted on a WebSocket:
+Cross-Site Request Forgery (CSRF) can be exploited in WebSocket connections if they rely on session cookies without additional verification. Below is an example of how a CSRF attack could be mounted on a WebSocket:
 
 ```
 <script>
