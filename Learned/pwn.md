@@ -32,4 +32,19 @@ Per vedere informazioni sul file (stripped, not stripped, architettura) puoi usa
 file <nome_file>
 ```
 
+# Lista delle syscall 
+
+[64 bit](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
+
+[32 bit](https://x86.syscall.sh/)
+
+[Tutte le syscall](https://syscalls.w3challs.com/)
+
+# Sito che indica la versione della libc dato un leak
+
+[Libc Database](https://libc.rip/)
+
+# Passaggio degli argomenti a 64 bit:
+RDI, RSI, RDX, RCX, R8, R9, ..., RSP + 0x10 + (i-6)*8
+
 
