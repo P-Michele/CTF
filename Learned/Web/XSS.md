@@ -5,6 +5,7 @@ Puoi sostituire le parentesi con i backtick, inoltre puoi fare XSS con hex e HTM
 # DOMPurify
 ### HTMX
 Puoi bypassare DOMPurify con HTMX (se usato) [HTMX-SS](https://blog.criticalthinkingpodcast.io/p/0-days-htmx-ss-with-mathias)
+La stessa cosa può avvenire con le direttive Angular e in generale con librerie/framework che lo permettono
 
 ### XML BUG (patchato)
 
