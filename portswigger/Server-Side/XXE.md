@@ -13,6 +13,8 @@ There are various types of XXE attacks:
 
 -Exploiting blind XXE to retrieve data via error messages, where the attacker can trigger a parsing error message containing sensitive data.
 
+PS. SYSTEM is used to create custom entities
+
 # PREVENT XXE:
 
 Disable thos feature that you don't need in your XML library
