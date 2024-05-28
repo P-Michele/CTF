@@ -8,4 +8,4 @@ Puoi bypassare DOMPurify con HTMX (se usato) [HTMX-SS](https://blog.criticalthin
 
 ### XML BUG (patchato)
 
-Bypasso di DOMPurify con le processing instruction XML: [XML DOMPurify Bypass](https://blog.slonser.info/posts/dompurify-node-type-confusion/)
+Bypasso di DOMPurify con le processing instruction XML [XML DOMPurify Bypass](https://blog.slonser.info/posts/dompurify-node-type-confusion/)
