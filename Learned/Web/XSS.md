@@ -13,9 +13,9 @@ Bypasso di DOMPurify con le processing instruction XML [XML DOMPurify Bypass](ht
 
 ### CID: Protocol
 
-DOMPurify allows the cid: protocol, which does not URL-encode double quotes. This can be exploited to inject malicious payloads:
+DOMPurify permette di usare il protocollo cid: che non URL-encoda le virgolette ("). Questo può portare a dei payload del tipo:
 ```
 <a id="yourID" name="yourName" href='cid:"onerror=alert(1)//'></a>
 ```
-In this example, an encoded double quote is injected and decoded at runtime, potentially leading to script execution when processed by the browser.
+
 
