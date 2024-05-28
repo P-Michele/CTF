@@ -17,5 +17,8 @@ DOMPurify permette di usare il protocollo cid: che non URL-encoda le virgolette 
 ```
 <a id="yourID" name="yourName" href='cid:"onerror=alert(1)//'></a>
 ```
-
+I protocolli abilitati di default sono: 
+```
+http, https, mailto, tel, callto, sms, cid, or xmpp
+```
 
