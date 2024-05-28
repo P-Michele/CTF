@@ -30,11 +30,3 @@ An attacker can inject HTML to overwrite the someObject with an anchor element, 
 ```
 In this scenario, using the same ID twice causes the DOM to treat these anchors as a collection under someObject.
 The name attribute in the second anchor (url) effectively overwrites the property of someObject that the JavaScript intends to use for a script source, redirecting it to a malicious script.
-
-# DOMPurify Bypass
-
-DOMPurify allows the cid: protocol, which does not URL-encode double quotes. This can be exploited to inject malicious payloads:
-```
-<a id="yourID" name="yourName" href='cid:"onerror=alert(1)//'></a>
-```
-In this example, an encoded double quote is injected and decoded at runtime, potentially leading to script execution when processed by the browser.
