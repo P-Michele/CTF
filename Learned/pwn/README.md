@@ -52,7 +52,7 @@ RDI, RSI, RDX, RCX, R8, R9, ..., RSP + 0x10 + (i-6)*8
 
 ```bins``` mostra lo stato dei bin
 
-```heap ``` mostra lo stato dell'heap, con chunk e metadati
+```heap``` mostra lo stato dell'heap, con chunk e metadati
 
 ```vis``` mostra uno stato colorato dell'heap in hexdump
 
