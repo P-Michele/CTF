@@ -51,9 +51,14 @@ RDI, RSI, RDX, RCX, R8, R9, ..., RSP + 0x10 + (i-6)*8
 ## Comandi utili:
 
 ```bins``` mostra lo stato dei bin
+
 ```heap ``` mostra lo stato dell'heap, con chunk e metadati
+
 ```vis``` mostra uno stato colorato dell'heap in hexdump
+
 ```try_free``` guarda se ```free(addr)``` avrebbe successo
+
 ```malloc_chunk``` guarda i metadati di un chunk ad un indirizzo
+
 ```find_fake_fast``` aiuta a forgiare falsi fastbin chunk overlappati all'indirizzo specificato.
 
