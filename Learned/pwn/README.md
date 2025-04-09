@@ -1,8 +1,9 @@
 # Cyclic Pattern
+```
 from pwn import *
 pattern = cyclic(200)
 offset = cyclic_find(val)
-
+```
 # NX
 NX (se abilitato) non è irreversibile. Può essere definita una zona eseguibile in memoria tramite mprotect
 
